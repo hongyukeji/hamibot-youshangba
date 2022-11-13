@@ -10,3 +10,19 @@ import {} from "./global";
 import { init } from "./lib/init";
 
 init();
+
+auto.waitFor();
+
+app.launchApp('优赏吧');
+// app.launch('com.hamibot.hamibot');
+
+let myBtnEL = className("android.widget.ImageView").desc("我的");
+myBtnEL.waitFor();
+
+if(myBtnEL.exists()){
+    myBtnEL.findOne().click();
+    toastLog("进入我的页面成功！")
+}
+
+hamibot.exit();
+
