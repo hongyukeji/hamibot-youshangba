@@ -7,7 +7,7 @@
  * @Description: 脚本入口
  */
 import {} from "./global";
-import { init } from "./lib/init";
+import {init} from "./lib/init";
 
 init();
 
@@ -19,9 +19,23 @@ app.launchApp('优赏吧');
 let myBtnEL = className("android.widget.ImageView").desc("我的");
 myBtnEL.waitFor();
 
-if(myBtnEL.exists()){
+// 判断 底部按钮 我的 是否存在
+if (myBtnEL.exists()) {
     myBtnEL.findOne().click();
     toastLog("进入我的页面成功！")
+
+    // 判断 我的店铺 按钮 是否存在
+    let myShopBtnEL = className("android.widget.ImageView").desc("我的店铺")
+    if (myShopBtnEL.exists()) {
+        myBtnEL.findOne().click();
+        toastLog("进入我的店铺成功！")
+        let underwayBtnEL = className("android.view.View").desc("进行中 第 2 个标签，共 3 个");
+        if (underwayBtnEL.exists()) {
+            underwayBtnEL.findOne().click();
+            toastLog("点击 进行中 按钮成功！")
+        }
+    }
+
 }
 
 hamibot.exit();
