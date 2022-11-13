@@ -3,7 +3,7 @@
  * @CreateDate: 2022-05-24 16:55:58
  * @LastEditor: BATU1579
  * @LastTime: 2022-09-06 14:30:21
- * @FilePath: \\buildConfig\\webpack.config.js
+ * @FilePath: \\buildConfig\\webpack.config.json
  * @Description: 默认设置
  * 
  * https://blog.csdn.net/Zong_0915/article/details/115831373

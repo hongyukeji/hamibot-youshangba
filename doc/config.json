@@ -1,0 +1,10 @@
+[
+    {
+        "name": "interval",
+        "value": "600",
+        "type": "number",
+        "label": "间隔操作时间（毫秒）",
+        "validation": "required",
+        "help": "留空为默认参数，如果手机性能强大，可以自行设置"
+    }
+]
