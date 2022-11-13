@@ -644,6 +644,18 @@ myBtnEL.waitFor();
 if (myBtnEL.exists()) {
   myBtnEL.findOne().click();
   toastLog("进入我的页面成功！");
+  var myShopBtnEL = className("android.widget.ImageView").desc("我的店铺");
+
+  if (myShopBtnEL.exists()) {
+    myBtnEL.findOne().click();
+    toastLog("进入我的店铺成功！");
+    var underwayBtnEL = className("android.view.View").desc("进行中 第 2 个标签，共 3 个");
+
+    if (underwayBtnEL.exists()) {
+      underwayBtnEL.findOne().click();
+      toastLog("点击 进行中 按钮成功！");
+    }
+  }
 }
 
 hamibot.exit();
