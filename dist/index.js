@@ -729,8 +729,6 @@ while (true) {
               console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
               confirmPassAuditBtn.findOne().click();
             }
-
-            console.log('开始时间', className("android.view.View").descContains("开始时间").findOne().contentDescription);
           }
 
           sleep(intervalTimeMillisecond);
