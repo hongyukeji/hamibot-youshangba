@@ -19,7 +19,7 @@ https://github.com/hongyukeji/hamibot-youshangba/tree/master/dist/index.js
 配置脚本 - Hamibot 文档
 https://docs.hamibot.com/tutorials/tutorial-config
 
-// 常见问题 · Hamibot 自动化脚本市场
+// 使用说明 - 常见问题 · Hamibot 自动化脚本市场
 // https://hamibot.com/faq/
 
 下载 · Hamibot 自动化脚本市场
