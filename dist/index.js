@@ -637,9 +637,134 @@ function init() {
 
 init();
 auto.waitFor();
+var interval = hamibot.env.interval;
+var intervalTimeMillisecond = interval || intervalTimeMillisecond;
+var waitTimeMillisecond = intervalTimeMillisecond * 2;
 app.launchApp('优赏吧');
-toast("优赏吧启动成功");
 toastLog("优赏吧启动成功！");
+sleep(waitTimeMillisecond);
+var skipBtnElement = className("android.widget.ImageView").descContains("跳过");
+
+if (skipBtnElement.exists()) {
+  skipBtnElement.findOne().click();
+  toastLog("广告跳过成功！");
+}
+
+var skipBtn = id("tt_splash_skip_btn");
+
+if (skipBtn.exists()) {
+  skipBtn.findOne().click();
+  toastLog("广告跳过成功！");
+}
+
+var myBtn = className("android.widget.ImageView").desc("我的");
+myBtn.waitFor();
+
+if (myBtn.exists()) {
+  myBtn.findOne().click();
+  toastLog("进入[我的]页面成功！");
+  sleep(waitTimeMillisecond);
+
+  while (true) {
+    var myShopBtn = className("android.widget.ImageView").desc("我的店铺");
+    myShopBtn.waitFor();
+
+    if (myShopBtn.exists()) {
+      myShopBtn.findOne().click();
+      toastLog("进入[我的店铺]页面成功！");
+      sleep(waitTimeMillisecond);
+      var taskRunListBtn = className("android.view.View").descContains("进行中");
+
+      if (taskRunListBtn.exists()) {
+        taskRunListBtn.findOne().click();
+        toastLog("点击[进行中]按钮成功！");
+        sleep(waitTimeMillisecond);
+        var taskListBtn = className("android.widget.ImageView").descContains("审核").untilFind().filter(function (w) {
+          if (w.contentDescription != null) {
+            var text_1 = String(w.contentDescription);
+            console.log('text', text_1);
+            var num = text_1.split(":")[1];
+            console.log('num', num);
+
+            if (num && Number(num) > 0) {
+              return true;
+            }
+          }
+
+          return false;
+        });
+
+        if (taskListBtn.length) {
+          toastLog("发现任务");
+
+          for (var _i = 0, taskListBtn_1 = taskListBtn; _i < taskListBtn_1.length; _i++) {
+            var taskListBtnElement = taskListBtn_1[_i];
+            toastLog("进入任务...");
+            var desc_1 = taskListBtnElement.contentDescription;
+            console.log('desc', desc_1);
+            taskListBtnElement.click();
+            sleep(intervalTimeMillisecond);
+            var waitTaskList = className("android.view.View").descContains("提交时间").untilFind().filter(function () {
+              return true;
+            });
+            sleep(intervalTimeMillisecond);
+
+            if (waitTaskList.length) {
+              for (var src_a = 0, waitTaskList_1 = waitTaskList; src_a < waitTaskList_1.length; src_a++) {
+                var waitTaskElement = waitTaskList_1[src_a];
+                sleep(intervalTimeMillisecond);
+                waitTaskElement.click();
+                sleep(intervalTimeMillisecond);
+                var passAuditBtn = className("android.view.View").descContains("审核通过");
+                passAuditBtn.waitFor();
+
+                if (passAuditBtn.exists()) {
+                  passAuditBtn.findOne().click();
+                  sleep(intervalTimeMillisecond);
+                  var confirmPassAuditBtn = className("android.view.View").descContains("确认通过");
+                  confirmPassAuditBtn.waitFor();
+
+                  if (confirmPassAuditBtn.exists()) {
+                    console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
+                    confirmPassAuditBtn.findOne().click();
+                  }
+
+                  console.log('开始时间', className("android.view.View").descContains("开始时间").findOne().contentDescription);
+                }
+
+                sleep(intervalTimeMillisecond);
+                className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
+                sleep(intervalTimeMillisecond);
+              }
+            }
+
+            sleep(intervalTimeMillisecond);
+            className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
+            sleep(intervalTimeMillisecond);
+            toastLog("已完成当前审核任务");
+          }
+
+          if (className("android.view.View").descContains("我的店铺").exists()) {
+            sleep(intervalTimeMillisecond);
+            className("android.widget.ImageView").clickable(true).depth(9).findOne().click();
+            sleep(intervalTimeMillisecond);
+          }
+        } else {
+          toastLog("未发现任务");
+        }
+      }
+    }
+
+    sleep(waitTimeMillisecond);
+  }
+} else {
+  toastLog("请关闭当前App，然后再启动脚本！");
+}
+
+sleep(5000);
+console.log('优赏吧运行结束！');
+console.hide();
+app.startActivity('console');
 hamibot.exit();
 /******/ })()
 ;

@@ -16,7 +16,7 @@ init();
 auto.waitFor();
 
 const {interval} = hamibot.env;
-toastLog(interval); // 打印并显示空白内容
+// toastLog(interval); // 打印并显示空白内容
 
 var intervalTimeMillisecond = interval || intervalTimeMillisecond;
 var waitTimeMillisecond = intervalTimeMillisecond * 2;
@@ -125,15 +125,15 @@ if (myBtn.exists()) {
                                     if (confirmPassAuditBtn.exists()) {
                                         console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
                                         // todo: 正式环境打开确认通过
-                                        // confirmPassAuditBtn.findOne().click();
+                                        confirmPassAuditBtn.findOne().click();
                                     }
 
                                     // todo: 正式环境 注释此处代码
-                                    let cancelPassAuditBtn = className("android.view.View").descContains("取消");
+                                    /*let cancelPassAuditBtn = className("android.view.View").descContains("取消");
                                     if (cancelPassAuditBtn.exists()) {
                                         console.log('cancelPassAuditBtn', cancelPassAuditBtn.findOne().contentDescription);
                                         cancelPassAuditBtn.findOne().click();
-                                    }
+                                    }*/
 
                                     console.log('开始时间', className("android.view.View").descContains("开始时间").findOne().contentDescription);
 
@@ -164,6 +164,8 @@ if (myBtn.exists()) {
         sleep(waitTimeMillisecond);
     }
 
+    //死循环
+    while (true) ;
 } else {
     toastLog("请关闭当前App，然后再启动脚本！");
 }
