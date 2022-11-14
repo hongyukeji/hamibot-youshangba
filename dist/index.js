@@ -680,76 +680,80 @@ while (true) {
   taskRunListBtn.findOne().click();
   toastLog("点击[进行中]按钮成功！");
   sleep(waitTimeMillisecond);
-  var taskListBtn = className("android.widget.ImageView").descContains("审核").untilFind().filter(function (w) {
-    if (w.contentDescription != null) {
-      var text_1 = String(w.contentDescription);
-      console.log('text', text_1);
-      var num = text_1.split(":")[1];
-      console.log('num', num);
+  var auditBtn = className("android.widget.ImageView").descContains("审核:");
 
-      if (num && Number(num) > 0) {
-        return true;
-      }
-    }
+  if (auditBtn.exists()) {
+    var taskListBtn = auditBtn.untilFind().filter(function (w) {
+      if (w.contentDescription != null) {
+        var text_1 = String(w.contentDescription);
+        console.log('text', text_1);
+        var num = text_1.split(":")[1];
+        console.log('num', num);
 
-    return false;
-  });
-
-  if (taskListBtn.length) {
-    toastLog("发现任务");
-
-    for (var _i = 0, taskListBtn_1 = taskListBtn; _i < taskListBtn_1.length; _i++) {
-      var taskListBtnElement = taskListBtn_1[_i];
-      toastLog("进入任务...");
-      var desc_1 = taskListBtnElement.contentDescription;
-      console.log('desc', desc_1);
-      taskListBtnElement.click();
-      sleep(intervalTimeMillisecond);
-      var waitTaskList = className("android.view.View").descContains("提交时间").untilFind().filter(function () {
-        return true;
-      });
-      sleep(intervalTimeMillisecond);
-
-      if (waitTaskList.length) {
-        for (var src_a = 0, waitTaskList_1 = waitTaskList; src_a < waitTaskList_1.length; src_a++) {
-          var waitTaskElement = waitTaskList_1[src_a];
-          sleep(intervalTimeMillisecond);
-          waitTaskElement.click();
-          sleep(intervalTimeMillisecond);
-          var passAuditBtn = className("android.view.View").descContains("审核通过");
-          passAuditBtn.waitFor();
-
-          if (passAuditBtn.exists()) {
-            passAuditBtn.findOne().click();
-            sleep(intervalTimeMillisecond);
-            var confirmPassAuditBtn = className("android.view.View").descContains("确认通过");
-            confirmPassAuditBtn.waitFor();
-
-            if (confirmPassAuditBtn.exists()) {
-              console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
-              confirmPassAuditBtn.findOne().click();
-            }
-          }
-
-          sleep(intervalTimeMillisecond);
-          className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
-          sleep(intervalTimeMillisecond);
+        if (num && Number(num) > 0) {
+          return true;
         }
       }
 
-      sleep(intervalTimeMillisecond);
-      className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
-      sleep(intervalTimeMillisecond);
-      toastLog("已完成当前审核任务");
-    }
+      return false;
+    });
 
-    if (className("android.view.View").descContains("我的店铺").exists()) {
-      sleep(intervalTimeMillisecond);
-      className("android.widget.ImageView").clickable(true).depth(9).findOne().click();
-      sleep(intervalTimeMillisecond);
+    if (taskListBtn.length) {
+      toastLog("发现任务");
+
+      for (var _i = 0, taskListBtn_1 = taskListBtn; _i < taskListBtn_1.length; _i++) {
+        var taskListBtnElement = taskListBtn_1[_i];
+        toastLog("进入任务...");
+        var desc_1 = taskListBtnElement.contentDescription;
+        console.log('desc', desc_1);
+        taskListBtnElement.click();
+        sleep(intervalTimeMillisecond);
+        var waitTaskList = className("android.view.View").descContains("提交时间").untilFind().filter(function () {
+          return true;
+        });
+        sleep(intervalTimeMillisecond);
+
+        if (waitTaskList.length) {
+          for (var src_a = 0, waitTaskList_1 = waitTaskList; src_a < waitTaskList_1.length; src_a++) {
+            var waitTaskElement = waitTaskList_1[src_a];
+            sleep(intervalTimeMillisecond);
+            waitTaskElement.click();
+            sleep(intervalTimeMillisecond);
+            var passAuditBtn = className("android.view.View").descContains("审核通过");
+            passAuditBtn.waitFor();
+
+            if (passAuditBtn.exists()) {
+              passAuditBtn.findOne().click();
+              sleep(intervalTimeMillisecond);
+              var confirmPassAuditBtn = className("android.view.View").descContains("确认通过");
+              confirmPassAuditBtn.waitFor();
+
+              if (confirmPassAuditBtn.exists()) {
+                console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
+                confirmPassAuditBtn.findOne().click();
+              }
+            }
+
+            sleep(intervalTimeMillisecond);
+            className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
+            sleep(intervalTimeMillisecond);
+          }
+        }
+
+        sleep(intervalTimeMillisecond);
+        className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
+        sleep(intervalTimeMillisecond);
+        toastLog("已完成当前审核任务");
+      }
+
+      if (className("android.view.View").descContains("我的店铺").exists()) {
+        sleep(intervalTimeMillisecond);
+        className("android.widget.ImageView").clickable(true).depth(9).findOne().click();
+        sleep(intervalTimeMillisecond);
+      }
+    } else {
+      toastLog("未发现任务");
     }
-  } else {
-    toastLog("未发现任务");
   }
 
   if (className("android.view.View").descContains("我的店铺").exists()) {
