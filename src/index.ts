@@ -179,6 +179,10 @@ while (true) {
         sleep(intervalTimeMillisecond);
     }
 
+    if (className("android.view.View").descContains("重新加载")) {
+        className("android.view.View").descContains("重新加载").findOne().click();
+    }
+
     sleep(waitTimeMillisecond);
 }
 
