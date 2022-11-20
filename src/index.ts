@@ -177,6 +177,11 @@ while (true) {
         toastLog("任务异常");
     }
 
+    // todo: 未验证处理方式
+    if (className("android.widget.ImageView").clickable(true).depth(8).exists()) {
+        className("android.widget.ImageView").clickable(true).depth(8).findOne().click(); // 返回按钮
+    }
+
     if (className("android.view.View").descContains("我的店铺").exists()) {
         // sleep(intervalTimeMillisecond);
         className("android.widget.ImageView").clickable(true).depth(9).findOne().click(); // 返回按钮
