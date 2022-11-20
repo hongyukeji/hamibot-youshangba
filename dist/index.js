@@ -51,118 +51,122 @@ toastLog("进入[我的]页面成功！");
 sleep(waitTimeMillisecond);
 
 while (true) {
-  var myShopBtn = className("android.widget.ImageView").desc("我的店铺");
-  myShopBtn.waitFor();
-  // if (myShopBtn.exists()) {}
+  try {
+    var myShopBtn = className("android.widget.ImageView").desc("我的店铺");
+    myShopBtn.waitFor();
+    // if (myShopBtn.exists()) {}
 
-  myShopBtn.findOne().click();
-  toastLog("进入[我的店铺]页面成功！");
+    myShopBtn.findOne().click();
+    toastLog("进入[我的店铺]页面成功！");
 
-  sleep(waitTimeMillisecond);
+    sleep(waitTimeMillisecond);
 
-  var taskRunListBtn = className("android.view.View").descContains("进行中");
-  taskRunListBtn.waitFor();
-  // if (taskRunListBtn.exists()) {}
+    var taskRunListBtn = className("android.view.View").descContains("进行中");
+    taskRunListBtn.waitFor();
+    // if (taskRunListBtn.exists()) {}
 
-  taskRunListBtn.findOne().click();
-  toastLog("点击[进行中]按钮成功！");
+    taskRunListBtn.findOne().click();
+    toastLog("点击[进行中]按钮成功！");
 
-  sleep(waitTimeMillisecond);
+    sleep(waitTimeMillisecond);
 
-  var auditBtn = className("android.widget.ImageView").descContains("审核:");
-  if (auditBtn.exists()) {
-    // 1.运行任务
-    let taskListBtn = auditBtn.untilFind().filter(function (w) {
-      // console.log('w', w);
-      if (w.contentDescription != null) {
-        let text = String(w.contentDescription);
-        console.log('text', text);
-        let num = text.split(":")[1];
-        console.log('num', num);
-        if (num && Number(num) > 0) {
-          return true;
-        }
-      }
-      return false;
-    });
-
-    if (taskListBtn.length) {
-      toastLog("发现任务");
-
-      // 2.处理任务集合
-      for (let taskListBtnElement of taskListBtn) {
-        toastLog("进入任务...");
-        let desc = taskListBtnElement.contentDescription;
-        console.log('desc', desc);
-
-        // 3.进入审核任务(进行中记录)
-        taskListBtnElement.click();
-
-        sleep(intervalTimeMillisecond);
-
-        // 4.获取所有待审核元素
-        var waitTaskList = className("android.view.View").descContains("提交时间").untilFind().filter(function () {
-          return true;
-        });
-        sleep(intervalTimeMillisecond);
-        if (waitTaskList.length) {
-          for (let waitTaskElement of waitTaskList) {
-            sleep(intervalTimeMillisecond);
-            // console.log('waitTaskElement', waitTaskElement);
-            waitTaskElement.click();
-            sleep(intervalTimeMillisecond);
-            let passAuditBtn = className("android.view.View").descContains("审核通过");
-            passAuditBtn.waitFor();
-            if (passAuditBtn.exists()) {
-              passAuditBtn.findOne().click();
-
-              sleep(intervalTimeMillisecond);
-
-              // 确认通过
-              let confirmPassAuditBtn = className("android.view.View").descContains("确认通过");
-              confirmPassAuditBtn.waitFor();
-              if (confirmPassAuditBtn.exists()) {
-                console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
-                // todo: 正式环境打开确认通过
-                confirmPassAuditBtn.findOne().click();
-              }
-
-              // todo: 正式环境 注释此处代码
-              /*let cancelPassAuditBtn = className("android.view.View").descContains("取消");
-              if (cancelPassAuditBtn.exists()) {
-                  console.log('cancelPassAuditBtn', cancelPassAuditBtn.findOne().contentDescription);
-                  cancelPassAuditBtn.findOne().click();
-              }*/
-
-              // console.log('开始时间', className("android.view.View").descContains("开始时间").findOne().contentDescription);
-
-            }
-            sleep(intervalTimeMillisecond);
-            // 返回按钮
-            className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
-            sleep(intervalTimeMillisecond);
+    var auditBtn = className("android.widget.ImageView").descContains("审核:");
+    if (auditBtn.exists()) {
+      // 1.运行任务
+      let taskListBtn = auditBtn.untilFind().filter(function (w) {
+        // console.log('w', w);
+        if (w.contentDescription != null) {
+          let text = String(w.contentDescription);
+          console.log('text', text);
+          let num = text.split(":")[1];
+          console.log('num', num);
+          if (num && Number(num) > 0) {
+            return true;
           }
         }
-        sleep(intervalTimeMillisecond);
-        className("android.widget.ImageView").clickable(true).depth(8).findOne().click(); // 返回按钮
-        sleep(intervalTimeMillisecond);
-        toastLog("已完成当前审核任务");
-      }
+        return false;
+      });
 
-      if (className("android.view.View").descContains("我的店铺").exists()) {
-        sleep(intervalTimeMillisecond);
-        className("android.widget.ImageView").clickable(true).depth(9).findOne().click(); // 返回按钮
-        sleep(intervalTimeMillisecond);
+      if (taskListBtn.length) {
+        toastLog("发现任务");
+
+        // 2.处理任务集合
+        for (let taskListBtnElement of taskListBtn) {
+          toastLog("进入任务...");
+          let desc = taskListBtnElement.contentDescription;
+          console.log('desc', desc);
+
+          // 3.进入审核任务(进行中记录)
+          taskListBtnElement.click();
+
+          sleep(intervalTimeMillisecond);
+
+          // 4.获取所有待审核元素
+          var waitTaskList = className("android.view.View").descContains("提交时间").untilFind().filter(function () {
+            return true;
+          });
+          sleep(intervalTimeMillisecond);
+          if (waitTaskList.length) {
+            for (let waitTaskElement of waitTaskList) {
+              sleep(intervalTimeMillisecond);
+              // console.log('waitTaskElement', waitTaskElement);
+              waitTaskElement.click();
+              sleep(intervalTimeMillisecond);
+              let passAuditBtn = className("android.view.View").descContains("审核通过");
+              passAuditBtn.waitFor();
+              if (passAuditBtn.exists()) {
+                passAuditBtn.findOne().click();
+
+                sleep(intervalTimeMillisecond);
+
+                // 确认通过
+                let confirmPassAuditBtn = className("android.view.View").descContains("确认通过");
+                confirmPassAuditBtn.waitFor();
+                if (confirmPassAuditBtn.exists()) {
+                  console.log('confirmPassAuditBtn', confirmPassAuditBtn.findOne().contentDescription);
+                  // todo: 正式环境打开确认通过
+                  confirmPassAuditBtn.findOne().click();
+                }
+
+                // todo: 正式环境 注释此处代码
+                /*let cancelPassAuditBtn = className("android.view.View").descContains("取消");
+                if (cancelPassAuditBtn.exists()) {
+                    console.log('cancelPassAuditBtn', cancelPassAuditBtn.findOne().contentDescription);
+                    cancelPassAuditBtn.findOne().click();
+                }*/
+
+                // console.log('开始时间', className("android.view.View").descContains("开始时间").findOne().contentDescription);
+
+              }
+              sleep(intervalTimeMillisecond);
+              // 返回按钮
+              className("android.widget.ImageView").clickable(true).depth(8).findOne().click();
+              sleep(intervalTimeMillisecond);
+            }
+          }
+          sleep(intervalTimeMillisecond);
+          className("android.widget.ImageView").clickable(true).depth(8).findOne().click(); // 返回按钮
+          sleep(intervalTimeMillisecond);
+          toastLog("已完成当前审核任务");
+        }
+
+        if (className("android.view.View").descContains("我的店铺").exists()) {
+          sleep(intervalTimeMillisecond);
+          className("android.widget.ImageView").clickable(true).depth(9).findOne().click(); // 返回按钮
+          sleep(intervalTimeMillisecond);
+        }
+      } else {
+        toastLog("未发现任务");
       }
-    } else {
-      toastLog("未发现任务");
     }
+  } catch (e) {
+    toastLog("任务异常");
   }
 
   if (className("android.view.View").descContains("我的店铺").exists()) {
-    sleep(intervalTimeMillisecond);
+    // sleep(intervalTimeMillisecond);
     className("android.widget.ImageView").clickable(true).depth(9).findOne().click(); // 返回按钮
-    sleep(intervalTimeMillisecond);
+    // sleep(intervalTimeMillisecond);
   }
 
   if (className("android.view.View").descContains("重新加载").exists()) {
@@ -172,7 +176,7 @@ while (true) {
   sleep(waitTimeMillisecond);
 }
 
-sleep(5000);
+sleep(3000);
 
 console.log('优赏吧运行结束！');
 // console.clear();
