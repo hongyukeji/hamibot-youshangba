@@ -33,33 +33,37 @@ try {
 
 // app.startActivity('console'); // 打开控制台(日志)
 // console.show() // 显示控制台小窗口
+sleep(waitTimeMillisecond);
 
 var myBtn = className("android.widget.ImageView").desc("我的");
-myBtn.waitFor();
-toastLog("优赏吧启动成功！");
-/*if (myBtn.exists()) {
-    // var currentActivity = currentActivity();
-    // com.example.zhuoxin_task.MainActivity
-    // alert("当前活动组件 " + currentActivity);
+// myBtn.waitFor();
+if (myBtn.exists()) {
+  // var currentActivity = currentActivity();
+  // com.example.zhuoxin_task.MainActivity
+  // alert("当前活动组件 " + currentActivity);
+  myBtn.findOne().click();
+  toastLog("进入[我的]页面成功！");
+  sleep(waitTimeMillisecond);
 } else {
-    toastLog("请关闭当前App，然后再启动脚本！");
-}*/
+  toastLog("请关闭当前App，然后再启动脚本！");
+}
 
-myBtn.findOne().click();
-toastLog("进入[我的]页面成功！");
-
-sleep(waitTimeMillisecond);
+toastLog("优赏吧启动成功！");
 
 while (true) {
   try {
-    var myShopBtn = className("android.widget.ImageView").desc("我的店铺");
-    myShopBtn.waitFor();
-    // if (myShopBtn.exists()) {}
+    try {
+      var myShopBtn = className("android.widget.ImageView").desc("我的店铺");
+      // myShopBtn.waitFor();
+      if (myShopBtn.exists()) {
+        myShopBtn.findOne().click();
+        toastLog("进入[我的店铺]页面成功！");
 
-    myShopBtn.findOne().click();
-    toastLog("进入[我的店铺]页面成功！");
-
-    sleep(waitTimeMillisecond);
+        sleep(waitTimeMillisecond);
+      }
+    } catch (e) {
+      toastLog("进入[我的店铺]页面失败！");
+    }
 
     var taskRunListBtn = className("android.view.View").descContains("进行中");
     taskRunListBtn.waitFor();
@@ -163,14 +167,20 @@ while (true) {
     toastLog("任务异常");
   }
 
+  // todo: 未验证处理方式
+  if (className("android.widget.ImageView").clickable(true).depth(8).exists()) {
+    className("android.widget.ImageView").clickable(true).depth(8).findOne().click(); // 返回按钮
+    sleep(intervalTimeMillisecond);
+  }
+
   if (className("android.view.View").descContains("我的店铺").exists()) {
-    // sleep(intervalTimeMillisecond);
     className("android.widget.ImageView").clickable(true).depth(9).findOne().click(); // 返回按钮
-    // sleep(intervalTimeMillisecond);
+    sleep(intervalTimeMillisecond);
   }
 
   if (className("android.view.View").descContains("重新加载").exists()) {
     className("android.view.View").descContains("重新加载").findOne().click();
+    sleep(intervalTimeMillisecond);
   }
 
   sleep(waitTimeMillisecond);
